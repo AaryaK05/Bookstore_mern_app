@@ -1,0 +1,11 @@
+/* Footer */
+
+.footer{
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 30px 0px;
+    bottom: 0;
+    border-top: 0.3px solid rgba(128, 128, 128, 0.5);
+}

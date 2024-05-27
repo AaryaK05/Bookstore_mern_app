@@ -1,10 +1,15 @@
+import './pages.css'
 import Header from "../components/Header";
+import Footer from '../components/Footer';
 
+export default function Home() {
+  return (
+    <div className='home'>
 
-export default function Home(){
-    return(
-        <>
-           <Header/>
-        </>
-    )
+      <Header />
+      <p id='landing-text'>Browse the best books to offer!</p>
+      <Footer/>
+    
+    </div>
+  );
 }

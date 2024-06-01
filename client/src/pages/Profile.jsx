@@ -2,12 +2,13 @@ import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 
 
-export default function Profile(){
-    return(
+
+export default function Profile() {
+    return (
         <>
-            <Header/>
+            <Header />
             Profile
-            <Footer/>
+            <Footer />
         </>
-    )
+    );
 }

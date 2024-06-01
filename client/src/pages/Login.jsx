@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
 import "./pages.css";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+const url='http://localhost:4010';
+
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -9,11 +11,11 @@ export default function Login() {
 
   const handleSubmit = async(event) => {
     event.preventDefault();
-    const response=await axios.post('http://localhost:4010/find_user',{
+    const response=await axios.post(`${url}/find_user`,{
       username:username,
       password:password
     });
-    if(response.data=='User Found'){
+    if(response.data==='User Found'){
       console.log('Success!');
     }
     else{

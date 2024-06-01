@@ -10,7 +10,7 @@ const app=express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-const port=4010;
+const port=process.env.PORT;
 
 
 /*Mongoose Connection */

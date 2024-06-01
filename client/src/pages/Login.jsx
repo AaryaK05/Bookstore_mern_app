@@ -2,7 +2,7 @@ import "./pages.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-const url='http://localhost:4010';
+const url='https://bookstore-server-zctn.onrender.com';
 
 
 export default function Login() {

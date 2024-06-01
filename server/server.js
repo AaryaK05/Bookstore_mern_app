@@ -3,6 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import User from './model.js';
+import passwordHash from 'password-hash';
 
 
 const url=`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.25ehbzy.mongodb.net/${process.env.MONGODB_DATABASE}?retryWrites=true&w=majority&appName=${process.env.MONGODB_CLUSTER}`;
@@ -32,7 +33,7 @@ app.post('/find_user',async(req,res)=>{
     const pass=req.body.password;
     await User.findOne({username:user}).then(data=>{
         if(data){
-            if(data.password===pass){
+            if(passwordHash.verify(pass,data.password)){
                 res.send('User Found');
             }
             else{
@@ -50,7 +51,7 @@ app.post('/find_user',async(req,res)=>{
 app.post('/add_user',async(req,res)=>{
     const user=req.body.username;
     const email=req.body.email;
-    const pass=req.body.password;
+    const pass=passwordHash.generate(req.body.password);
     const data={
         username:user,
         email:email,

@@ -1,27 +1,29 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import './pages.css'
-import { useState } from "react";
+import {useEffect, useState } from "react";
 import axios from "axios";
-
+// const url='https://bookstore-server-zctn.onrender.com';
+const url='http://localhost:4010';
 
 export default function Signin() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate=useNavigate();
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.post("http://localhost:4010/add_user", {
+    const response = await axios.post(`${url}/add_user`, {
       username: username,
       email:email,
       password: password,
     });
     if (response.status === 200) {
-      console.log("Success!");
+      navigate("/login")
     } else {
-      console.log("Failed to Signin!");
+      alert(`Failed to signin`);
     }
-    alert(`Username:${username} Password:${password}`);
   };
 
   return (

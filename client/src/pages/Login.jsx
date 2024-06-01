@@ -1,13 +1,25 @@
 import "./pages.css";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, redirect, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
-const url='https://bookstore-server-zctn.onrender.com';
+// const url='https://bookstore-server-zctn.onrender.com';
+const url='http://localhost:4010';
 
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);  
+  const navigate=useNavigate();
+
+
+  useEffect(()=>{
+    const localstorageGetInformation=localStorage.getItem('isLoggedIn')
+    if(localstorageGetInformation=='1'){
+      setIsLoggedIn(true);
+      navigate('/');
+    }
+  })
 
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -16,10 +28,12 @@ export default function Login() {
       password:password
     });
     if(response.data==='User Found'){
-      console.log('Success!');
+      localStorage.setItem("isLoggedIn",'1')
+      setIsLoggedIn(true);
+      navigate('/');
     }
     else{
-      console.log(`Error:${response.data}`);
+      alert(`Error:${response.data}`);
     }
   };
 

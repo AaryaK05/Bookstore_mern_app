@@ -2,8 +2,7 @@ import "./pages.css";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// const url='https://bookstore-server-zctn.onrender.com';
-const url='http://localhost:4010';
+import Url from "../utils/ServerUrl";
 
 
 export default function Login() {
@@ -23,12 +22,13 @@ export default function Login() {
 
   const handleSubmit = async(event) => {
     event.preventDefault();
-    const response=await axios.post(`${url}/find_user`,{
+    const response=await axios.post(`${Url}/find_user`,{
       username:username,
       password:password
     });
     if(response.data==='User Found'){
       localStorage.setItem("isLoggedIn",'1')
+      localStorage.setItem("Username",username);
       setIsLoggedIn(true);
       navigate('/');
     }

@@ -1,0 +1,33 @@
+.BookContainer{
+    width: 150px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.BookContainer img{
+    height: 200px;
+}
+
+#BookName{
+    font-size: 1.2rem;
+    font-family:'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+.BookAmount{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0px;
+}
+
+#add-to-cart{
+    background-color: red;
+    border-color: red;
+    border-radius:5px;
+    color: white;
+    margin-top: 5px;
+    cursor: pointer;
+}

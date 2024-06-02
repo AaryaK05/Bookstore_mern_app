@@ -8,7 +8,6 @@ export default function Header(){
   const localstorageGetInformation=localStorage.getItem('isLoggedIn')
 
   useEffect(()=>{
-    console.log(localstorageGetInformation);
     if(localstorageGetInformation!='1'){
       navigate('/login');
     }

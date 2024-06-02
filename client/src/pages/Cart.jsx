@@ -7,7 +7,7 @@ export default function Cart(){
     return(
         <>
             <Header/>
-            Cart
+             
             <Footer/>
         </>
     )

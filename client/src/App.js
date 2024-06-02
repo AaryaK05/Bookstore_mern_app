@@ -5,9 +5,11 @@ import Profile from './pages/Profile';
 import Cart from './pages/Cart';
 import Signin from './pages/Signin';
 import Login from './pages/Login';
+import { useEffect } from 'react';
 
 
 function App() {
+  
   return (
     <BrowserRouter>
       <Routes>

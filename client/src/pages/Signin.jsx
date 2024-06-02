@@ -2,8 +2,8 @@ import { Link, useNavigate  } from 'react-router-dom';
 import './pages.css'
 import {useEffect, useState } from "react";
 import axios from "axios";
-// const url='https://bookstore-server-zctn.onrender.com';
-const url='http://localhost:4010';
+import Url from '../utils/ServerUrl';
+
 
 export default function Signin() {
   const [username, setUsername] = useState("");
@@ -14,7 +14,7 @@ export default function Signin() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.post(`${url}/add_user`, {
+    const response = await axios.post(`${Url}/add_user`, {
       username: username,
       email:email,
       password: password,

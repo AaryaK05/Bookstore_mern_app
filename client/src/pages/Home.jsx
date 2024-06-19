@@ -8,13 +8,13 @@ import Url from "../utils/ServerUrl";
 
 export default function Home() {
   const [books, setBooks] = useState([]);
+  const ServerUrl=Url;
 
   useEffect(() => {
-    async function getItems() {
-      await axios.get(`${Url}/getBooks`).then((response) => {
-        const data = JSON.stringify(response.data);
-        const array = JSON.parse(data);
-        setBooks(array);
+   function getItems() {
+       axios.get(`${Url}/getBooks`).then((response) => {
+        const data = response.data;
+        setBooks(data);
       });
     }
     getItems();
@@ -28,7 +28,7 @@ export default function Home() {
         <input placeholder="Search for..." />
         <div className="home-items">
           {books.map((b) => {
-            return <Book Name={b.Name} Price={b.Price} Url={b.Url}/>;
+            return <Book key={b.id} Name={b.Name} Price={b.Price} Url={b.Url} ServerUrl={ServerUrl}/>;
           })}
         </div>
       </div>

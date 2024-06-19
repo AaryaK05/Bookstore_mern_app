@@ -63,6 +63,13 @@
 .profile-buttons{
 
 }
+
+.orders{
+    display: flex;
+    flex-direction: column;
+    margin-left: 280px;
+    margin-top: 50px;
+}
 /* Profile*/
 
 

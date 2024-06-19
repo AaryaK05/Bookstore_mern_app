@@ -1,22 +1,32 @@
-.BookContainer{
-    width: 150px;
+.CartContainer{
+    width: 50%;
     height: fit-content;
     display: flex;
-    flex-direction: column;
+    justify-content:space-around;
     border: 1px solid black;
     padding: 10px;
-    margin-bottom: 20px;
+    margin: auto;
+    margin-top: 30px;
 }
 
-.BookContainer img{
-    height: 200px;
+.CartContainer img{
+    width: 80px;
 }
 
 #BookName{
     font-size: 1.2rem;
     font-family:'Times New Roman', Times, serif;
     text-align: center;
+    margin: 20px 0px;
 }
+
+.BookAmount{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 10px 0px;
+}
+
 
 #add-to-cart{
     background-color: red;
@@ -25,14 +35,4 @@
     color: white;
     margin-top: 5px;
     cursor: pointer;
-}
-
-.disabled {
-    pointer-events: none;
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.hide{
-    display: none;
 }

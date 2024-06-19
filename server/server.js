@@ -2,11 +2,12 @@ import express, { response } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import User from './model.js';
-import {Book} from './model.js';
+import User, { Order } from './model.js';
+import {Book, Cart} from './model.js';
 import passwordHash from 'password-hash';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
 
 
 
@@ -85,8 +86,59 @@ app.get("/getBooks", async(req,res)=>{
     res.json(books);
 });
 
-app.post('/addorder',(req,res)=>{
+app.get("/getOrders",async(req,res)=>{
+    const uname=req.body.username;
+    var orders=await Order.find(uname,{Orders:1});
+    console.log(orders);
+    res.json(orders);
+})
 
+app.get("/getCart",async(req,res)=>{
+    const uname=req.body.username;
+    Cart.findOne(uname).then(response=>{
+        res.json(response);
+    }).catch(err=>{
+        console.log(err);
+    });
+})
+
+
+app.post("/addtocart",async(req,res)=>{
+
+    const filter={Username:'Dummy'}
+    const item=req.body.item;
+    console.log(item);
+    Cart.findOneAndUpdate(filter,{"$push":{
+        'Cart':item
+    }
+    },{upsert:true}).then((r)=>{
+        console.log(r);
+        res.send("Updated").status(200);
+    }).catch(err=>{
+        console.log(err);
+    });
+})
+
+app.post('/addOrder',async(req,res)=>{
+    const username=req.body.username;
+    const cart=req.body.cart;
+    console.log(cart);
+    const filter={Username:username}
+    Order.findOneAndUpdate(filter,{"$push":{
+        'Orders':[{
+            Items:cart,
+        }
+        ]
+    }}).then(()=>{
+        Cart.deleteOne({Username:username}).then(()=>{
+            res.send("Created").status(200);
+        }).catch(err=>{
+            console.log("Coudn't Delete!"+err);
+        })
+    }).catch((err)=>{
+        console.log(err);
+        console.log("Not created");
+    })
 });
 
 app.listen(port,(req,res)=>{

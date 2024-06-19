@@ -8,6 +8,7 @@ const UserSchema= new Schema({
 });
 const User=model('User',UserSchema);
 
+
 const BookSchema=new Schema({
     id:Number,
     Name:{
@@ -21,5 +22,64 @@ const BookSchema=new Schema({
     Url:String
 })
 export const Book=model('Book',BookSchema);
+
+const OrderSchema=new Schema({
+    id:Number,
+    Username:{
+        type:String,
+        require:true
+    },
+    Orders:[
+            {
+                id:Number,
+                Items:[
+                    {
+                        Name:{
+                            type:String,
+                            require:true
+                        },
+                        Price:{
+                            type:String,
+                            require:true
+                        },
+                        amount:{
+                            type:Number,
+                            require:true
+                        },
+                        Url:String
+                    }
+                ],
+                Time:{
+                    type:Date,
+                    default:Date.now()
+                },
+                Payment:{
+                    type:Boolean,
+                    default:false
+                },
+                OrderProcessed:{
+                    type:String,
+                    default:'Not Completed'
+                }
+            }
+    ],
+})
+
+export const Order=model('Order',OrderSchema);
+
+const cartSchema=new Schema({
+    id:Number,
+    Username:{
+        type:String,
+        require:true
+    },
+    Cart:{
+        type:Array,
+        require:true
+    }
+})
+
+export const Cart=model('Cart',cartSchema);
+
 
 export default User;

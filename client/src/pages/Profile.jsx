@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Url from "../utils/ServerUrl";
 
+
 export default function Profile() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -15,9 +16,18 @@ export default function Profile() {
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("Username");
+    window.location.href = '/login';
   };
 
-  const handleRemove = () => {};
+  const handleRemove = () => {
+    axios.post(`${Url}/removeUser`,{
+      username:localStorage.getItem("Username")
+    }).then(response=>{
+      console.log(response.data);
+    }).catch(err=>{
+      console.log(err);
+    })
+  };
 
   const uname = localStorage.getItem("Username");
   useEffect(() => {
@@ -33,9 +43,11 @@ export default function Profile() {
       } else {
         alert(`Error fetching your data:${response.data}`);
       }
-      axios
-        .get(`${Url}/getOrders`, {
-          username: localStorage.getItem("Username"),
+      axios.get(`${Url}/getOrders`, {
+          params:{
+            id:124
+            // username:localStorage.getItem('Username')
+          }
         })
         .then((response) => {
           console.log(response.data[0].Orders);

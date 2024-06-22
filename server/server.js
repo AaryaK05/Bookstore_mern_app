@@ -20,7 +20,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); 
 app.use(express.static(__dirname+'/public'));
 const port=process.env.PORT;
-
+let _Username;
 
 /*Mongoose Connection */
 mongoose.connect(url).then(() => {
@@ -42,6 +42,8 @@ app.get("/user_info",async(req,res)=>{
         res.send({
             email:data.email
         }).status(200);
+    }).catch(err=>{
+        console.log(err);
     })
 })
 
@@ -51,6 +53,7 @@ app.post('/find_user',async(req,res)=>{
     await User.findOne({username:user}).then(data=>{
         if(data){
             if(passwordHash.verify(pass,data.password)){
+                _Username=user;
                 res.send('User Found');
             }
             else{
@@ -87,14 +90,14 @@ app.get("/getBooks", async(req,res)=>{
 });
 
 app.get("/getOrders",async(req,res)=>{
-    const uname=req.body.username;
-    var orders=await Order.find(uname,{Orders:1});
-    console.log(orders);
+    const uname=_Username;
+    var orders=await Order.find({Username:uname},{Orders:1});
     res.json(orders);
 })
 
 app.get("/getCart",async(req,res)=>{
-    const uname=req.body.username;
+    const uname={Username:_Username}
+    console.log(uname);
     Cart.findOne(uname).then(response=>{
         res.json(response);
     }).catch(err=>{
@@ -104,15 +107,14 @@ app.get("/getCart",async(req,res)=>{
 
 
 app.post("/addtocart",async(req,res)=>{
-
-    const filter={Username:'Dummy'}
+    const uname=req.body.username;
+    console
+    const filter={Username:uname};
     const item=req.body.item;
-    console.log(item);
     Cart.findOneAndUpdate(filter,{"$push":{
         'Cart':item
     }
     },{upsert:true}).then((r)=>{
-        console.log(r);
         res.send("Updated").status(200);
     }).catch(err=>{
         console.log(err);
@@ -122,7 +124,7 @@ app.post("/addtocart",async(req,res)=>{
 app.post('/addOrder',async(req,res)=>{
     const username=req.body.username;
     const cart=req.body.cart;
-    console.log(cart);
+    console.log('Order for'+username)
     const filter={Username:username}
     Order.findOneAndUpdate(filter,{"$push":{
         'Orders':[{
@@ -140,6 +142,17 @@ app.post('/addOrder',async(req,res)=>{
         console.log("Not created");
     })
 });
+
+app.post("/removeUser",(req,res)=>{
+    const username={username:req.body.username};
+    User.deleteOne(username).then(()=>{
+        console.log("Deleted uSER");
+        res.send("Deleted").status(200);
+    }
+    ).catch(err=>{
+        console.log(err);
+    })
+})
 
 app.listen(port,(req,res)=>{
     console.log(`Server listening on ${port}`);

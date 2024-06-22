@@ -32,7 +32,6 @@ export default function Book({ Name, Price, Url,ServerUrl}) {
 
   useEffect(()=>{
     const added=localStorage.getItem(Name);
-    console.log(added);
     if(added){
       setAddedtocart(true);
     }

@@ -31,7 +31,7 @@ export default function Signin() {
       <p id="bookez">Bookez</p>
       <div className="auth-form">
         <form onSubmit={handleSubmit}>
-          <p>Username</p>
+          <p>Username:</p>
           <input
             type="text"
             value={username}
@@ -39,7 +39,7 @@ export default function Signin() {
             placeholder="enter username"
             required
           />
-          <p>Email</p>
+          <p>Email:</p>
           <input
             type="email"
             value={email}
@@ -47,7 +47,7 @@ export default function Signin() {
             placeholder="enter email"
             required
           />
-          <p>Password</p>
+          <p>Password:</p>
           <input
             type="password"
             value={password}
@@ -55,7 +55,10 @@ export default function Signin() {
             placeholder="enter password"
             required
           />
-          <input type="submit" value="submit" />
+          <br/>
+          <div style={{display:'flex',justifyContent:'center',marginTop:'5px'}}>
+          <input type="submit" value="submit"/>
+          </div>
         </form>
         <Link to="/login">Go back to login</Link>
       </div>

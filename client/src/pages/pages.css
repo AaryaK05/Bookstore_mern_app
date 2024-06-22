@@ -22,7 +22,7 @@
     align-items:center;
     align-content: center;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 #bookez{
@@ -68,7 +68,6 @@
     display: flex;
     flex-direction: column;
     margin-left: 280px;
-    margin-top: 50px;
 }
 /* Profile*/
 

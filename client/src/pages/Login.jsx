@@ -42,7 +42,7 @@ export default function Login() {
       <p id="bookez">Bookez</p>
       <div className="auth-form">
         <form onSubmit={handleSubmit}>
-          <p>Username</p>
+          <p>Username:</p>
           <input
             type="text"
             value={username}
@@ -50,7 +50,7 @@ export default function Login() {
             placeholder="enter username"
             required
           />
-          <p>Password</p>
+          <p>Password:</p>
           <input
             type="password"
             value={password}
@@ -58,7 +58,10 @@ export default function Login() {
             placeholder="enter password"
             required
           />
-          <input type="submit" value="submit" />
+          <br/>          
+          <div style={{display:'flex',justifyContent:'center',marginTop:'5px'}}>
+          <input type="submit" value="submit"/>
+          </div>
         </form>
         <Link to="/signin">Don't have an account?</Link>
       </div>

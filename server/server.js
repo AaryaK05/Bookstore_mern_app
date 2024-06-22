@@ -108,7 +108,7 @@ app.get("/getCart",async(req,res)=>{
 
 app.post("/addtocart",async(req,res)=>{
     const uname=req.body.username;
-    console
+
     const filter={Username:uname};
     const item=req.body.item;
     Cart.findOneAndUpdate(filter,{"$push":{

@@ -15,6 +15,10 @@ const BookSchema=new Schema({
         type:String,
         require:true
     },
+    Genre:{
+        type:Array,
+        require:true
+    },
     Price:{
         type:String,
         require:true

@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Url from "../utils/ServerUrl";
 
-
 export default function Profile() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -14,19 +13,33 @@ export default function Profile() {
   const [orderexist, setOrderExist] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("Username");
-    window.location.href = '/login';
+    const answer = window.confirm("Do you want to logout?");
+
+    if (answer) {
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("Username");
+      window.location.href = "/login";
+    }
   };
 
   const handleRemove = () => {
-    axios.post(`${Url}/removeUser`,{
-      username:localStorage.getItem("Username")
-    }).then(response=>{
-      console.log(response.data);
-    }).catch(err=>{
-      console.log(err);
-    })
+    const answer = window.confirm(
+      "Are you sure you want to remove your account?"
+    );
+    if (answer) {
+      axios
+        .post(`${Url}/removeUser`, {
+          username: localStorage.getItem("Username"),
+        })
+        .then((response) => {
+          localStorage.removeItem("isLoggedIn");
+          localStorage.removeItem("Username");
+          window.location.href = "/login";
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const uname = localStorage.getItem("Username");
@@ -43,14 +56,14 @@ export default function Profile() {
       } else {
         alert(`Error fetching your data:${response.data}`);
       }
-      axios.get(`${Url}/getOrders`, {
-          params:{
-            id:124
+      axios
+        .get(`${Url}/getOrders`, {
+          params: {
+            id: 124,
             // username:localStorage.getItem('Username')
-          }
+          },
         })
         .then((response) => {
-          console.log(response.data[0].Orders);
           setOrders(response.data[0].Orders);
           setOrderExist(true);
         })
@@ -82,49 +95,49 @@ export default function Profile() {
         <h3 style={{ marginBottom: "20px" }}>Orders</h3>
 
         <table style={{ border: "1px solid black", width: "80%" }}>
-          <th
-            style={{
-              borderBottom: "1px solid black",
-              display: "flex",
-              justifyContent: "space-around",
-              width: "100%",
-            }}
-          >
-            <td>Orders</td>
-            <td>Items</td>
-          </th>
-
-          {orderexist ? (
-            orders.map((ord) => {
-              return (
-                <>
-                  <tr style={{ height: "150px" }}>
-                    <td style={{width:'200px'}}>Order Id: {ord._id}<br></br>
-                    Time:{ord.Time}
-                    </td>
-                    <td style={{width:'400px'}}>
-                      {ord.Items.map((item) => {
-                        return (
-                          <div style={{ height: "100px", display: "flex" }}>
-                            <img src={item.Url} height="50px" />
+          <thead>
+            <tr>
+              <th className="rb">Order Id</th>
+              <th>Items</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orderexist ? (
+            
+              orders.map((ord) => {
+                let date=new Date(ord.Time);
+                return (
+                  <>
+                    <tr>
+                      <td style={{width: "100px"}}>
+                        Order Id: {ord._id}
+                        <br></br>
+                        Date:{date.getDate()}/{date.getMonth()+1}/{date.getFullYear()}
+                        <br></br>
+                        Time:{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}
+                      </td>
+                      <td style={{width: "400px"}}>
+                        {ord.Items.map((item) => {
+                          return (
                             <div>
-                              <p>{item.Price}</p>
+                              <span>{item.amount}</span>x
+                              <span>{item.Name}</span>=<span>{item.Price}</span>
                             </div>
-                            <p>{item.amount}</p>
-                          </div>
-                        );
-                      })}
-                    </td>
-                  </tr>
-                </>
-              );
-            })
-          ) : (
-            <>
-              <p>No orders yet!</p>
-            </>
-          )}
+                          );
+                        })}
+                      </td>
+                    </tr>
+                  </>
+                );
+              })
+            ) : (
+              <tr>
+                <td>No orders yet!</td>
+              </tr>
+            )}
+          </tbody>
         </table>
+        
       </div>
       <Footer />
     </>

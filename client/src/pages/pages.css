@@ -69,6 +69,17 @@
     flex-direction: column;
     margin-left: 280px;
 }
+
+table{
+    border-collapse: collapse;
+}
+th,td{
+    border-right: 1px solid black;
+}
+
+tr{
+    border-bottom:2px solid black;
+}
 /* Profile*/
 
 
@@ -78,7 +89,7 @@
 }
 
 .home-body{
-    margin: 0% 25%;
+    margin: 0% 18%;
 }
 
 .home-body input{
@@ -87,6 +98,11 @@
     border-radius: 20px;
     border-color: rgba(128, 128, 128, 0.521);
     margin-bottom: 30px;
+}
+
+.home-container{
+    display: flex;
+    
 }
 
 .home-items{
@@ -101,4 +117,34 @@
     margin: 100px 0px;
 }
 
+.filters{
+    width: 200px;
+}
+
+.filter-content{
+    display: flex;
+    flex-direction: column;
+}
+
+#apply{
+    width: 50px;
+    padding: 0;
+}
+
+#sort_by_price_a,
+#sort_by_name
+{
+    width: 20px;
+    margin-top: 2px;
+}
+#sort_by_price_d
+{
+    width: 20px;
+    margin-top: 2px;
+}
+
+.sort
+.applybtn{
+    display: flex;
+}
 /* home body */

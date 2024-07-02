@@ -33,7 +33,19 @@ mongoose.connect(url).then(() => {
 
 
 app.get('/', (req, res) => {
-    res.send({ "msg": "This has CORS enabled 🎈" })
+    const data={
+        Name:"Coraline",
+        Genre:['horror','fantasy'],
+        Price:"150",
+        Url:"http://localhost:4010/images/coraline.jpg",
+    }
+
+    Book.create(data).then(()=>{
+        res.send('Book Successfully Created!');
+    }).catch((err)=>{
+        res.send(`Error:${err}`);
+    });
+    // res.send({ "msg": "This has CORS enabled 🎈" })
 });
 
 app.get("/user_info",async(req,res)=>{
@@ -89,6 +101,73 @@ app.get("/getBooks", async(req,res)=>{
     res.json(books);
 });
 
+app.post("/applyFilter",async(req,res)=>{
+    const genre=req.body.genre;
+    const sortbyname=req.body.sname;
+    const sortbypriceascending=req.body.sortbypriceascending;
+    const sortbypricedescending=req.body.sortbypricedescending;
+
+    if(genre=="all"){
+        if(sortbyname){
+                Book.find().sort({Name:1}).then(response=>{
+                    res.send(response)
+                }).catch(err=>{
+                    console.log(err);
+                })
+        }else{
+            if(sortbypriceascending){
+                Book.find().sort({Price:1}).then(response=>{
+                    res.send(response)
+                }).catch(err=>{
+                    console.log(err);
+                })
+            }else if(sortbypricedescending){
+                Book.find().sort({Price:-1}).then(response=>{
+                    res.send(response)
+                }).catch(err=>{
+                    console.log(err);
+                })
+            }else{
+                Book.find().then(response=>{
+                    res.send(response)
+                }).catch(err=>{
+                    console.log(err);
+                })
+            }
+        }
+    }else{
+        if(sortbyname){
+                Book.find({Genre:{$in:[genre]}}).sort({Name:1}).then(response=>{
+                    res.json(response).status(200);
+                }).catch(err=>{
+                    console.log(err);
+                });
+        }
+        else{
+            if(sortbypriceascending){
+                Book.find({Genre:{$in:[genre]}}).sort({Price:1}).then(response=>{
+                    res.json(response).status(200);
+                }).catch(err=>{
+                    console.log(err);
+                });
+            }else if(sortbypricedescending){
+                Book.find({Genre:{$in:[genre]}}).sort({Price:-1}).then(response=>{
+                    res.json(response).status(200);
+                }).catch(err=>{
+                    console.log(err);
+                });
+            }else{
+                Book.find({Genre:{$in:[genre]}}).then(response=>{
+                    res.json(response).status(200);
+                }).catch(err=>{
+                    console.log(err);
+                });
+            }
+
+        }
+}
+})
+
 app.get("/getOrders",async(req,res)=>{
     const uname=_Username;
     var orders=await Order.find({Username:uname},{Orders:1});
@@ -97,7 +176,6 @@ app.get("/getOrders",async(req,res)=>{
 
 app.get("/getCart",async(req,res)=>{
     const uname={Username:_Username}
-    console.log(uname);
     Cart.findOne(uname).then(response=>{
         res.json(response);
     }).catch(err=>{
@@ -108,7 +186,6 @@ app.get("/getCart",async(req,res)=>{
 
 app.post("/addtocart",async(req,res)=>{
     const uname=req.body.username;
-
     const filter={Username:uname};
     const item=req.body.item;
     Cart.findOneAndUpdate(filter,{"$push":{
@@ -124,9 +201,8 @@ app.post("/addtocart",async(req,res)=>{
 app.post('/addOrder',async(req,res)=>{
     const username=req.body.username;
     const cart=req.body.cart;
-    console.log('Order for'+username)
-    const filter={Username:username}
-    Order.findOneAndUpdate(filter,{"$push":{
+    // const filter={Username:username}
+    Order.findOneAndUpdate({Username:username},{"$push":{
         'Orders':[{
             Items:cart,
         }

@@ -1,5 +1,5 @@
 .BookContainer{
-    width: 150px;
+    width: 125px;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -9,7 +9,7 @@
 }
 
 .BookContainer img{
-    height: 200px;
+    height: 180px;
 }
 
 #BookName{

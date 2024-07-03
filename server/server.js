@@ -33,18 +33,18 @@ mongoose.connect(url).then(() => {
 
 
 app.get('/', (req, res) => {
-    const data={
-        Name:"Coraline",
-        Genre:['horror','fantasy'],
-        Price:"150",
-        Url:"http://localhost:4010/images/coraline.jpg",
-    }
+    // const data={
+    //     Name:"Coraline",
+    //     Genre:['horror','fantasy'],
+    //     Price:"150",
+    //     Url:"http://localhost:4010/images/coraline.jpg",
+    // }
 
-    Book.create(data).then(()=>{
-        res.send('Book Successfully Created!');
-    }).catch((err)=>{
-        res.send(`Error:${err}`);
-    });
+    // Book.create(data).then(()=>{
+    //     res.send('Book Successfully Created!');
+    // }).catch((err)=>{
+    //     res.send(`Error:${err}`);
+    // });
     // res.send({ "msg": "This has CORS enabled 🎈" })
 });
 
@@ -100,6 +100,20 @@ app.get("/getBooks", async(req,res)=>{
     var books=await Book.find();
     res.json(books);
 });
+
+app.get("/findinCart",(req,res)=>{
+    const name=req.query.Name;
+    Cart.find({Username:_Username}).where('Cart').elemMatch({Name:name}).then(response=>{
+        if(response.length!=0){
+            res.send("Found");
+        }else{
+            res.send("Not Found");
+        }
+    }).catch(err=>{
+        console.log(err);
+    });
+    // res.send("Success").status(200);
+})
 
 app.post("/applyFilter",async(req,res)=>{
     const genre=req.body.genre;

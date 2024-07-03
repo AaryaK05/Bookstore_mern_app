@@ -20,7 +20,7 @@ const BookSchema=new Schema({
         require:true
     },
     Price:{
-        type:String,
+        type:Number,
         require:true
     },
     Url:String
@@ -43,7 +43,7 @@ const OrderSchema=new Schema({
                             require:true
                         },
                         Price:{
-                            type:String,
+                            type:Number,
                             require:true
                         },
                         amount:{

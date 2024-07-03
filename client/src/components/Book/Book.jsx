@@ -31,10 +31,17 @@ export default function Book({ Name, Price, Url,ServerUrl}) {
   }
 
   useEffect(()=>{
-    const added=localStorage.getItem(Name);
-    if(added){
-      setAddedtocart(true);
-    }
+    axios.get(`${ServerUrl}/findinCart`,{
+      params:{
+        Name:Name
+      }
+    }).then(res=>{
+      if(res.data=='Found'){
+        setAddedtocart(true);
+      }
+    }).catch(err=>{
+      console.log(err);
+    })
   },[]);
 
   return (

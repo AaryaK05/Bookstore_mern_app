@@ -8,6 +8,7 @@ import axios from "axios";
 import Url from "../utils/ServerUrl";
 
 export default function Cart(){
+    let totalAmount=0;
     const [cart,setCart]=useState([]);
     const [cartExist,setCartExist]=useState(false);
     const [amount, setAmount] = useState(0);
@@ -54,6 +55,7 @@ export default function Cart(){
             
                 {cartExist ? 
                 cart.map((c)=>{
+                    totalAmount+=c.Price;
                     return <>
                     <CartItem Url={c.Url} Name={c.Name} Price={c.Price} amount={c.amount} handleAdd={handleAdd} handleSubstract={handleSubstract}/>                   
                     <div style={{textAlign:'center',margin:'50px 0px'}}>
@@ -65,7 +67,7 @@ export default function Cart(){
                 <>
                 <div style={{textAlign:'center',margin:'50px 0px'}}>
 
-                <p>Total Amount:</p>
+                <p>Total Amount:{totalAmount}</p>
                     <button><Link to="/">Contine Browsing other items</Link></button>
                     <button onClick={handleBuy}>Buy</button>
                     </div>

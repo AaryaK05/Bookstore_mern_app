@@ -23,7 +23,18 @@ const BookSchema=new Schema({
         type:Number,
         require:true
     },
-    Url:String
+    Url:String,
+    Description:String,
+    Reviews:[
+        {
+            Username:String,
+            Review:String,
+            Time:{
+                type:Date,
+                default:Date.now()
+            }
+        }
+    ]   
 })
 export const Book=model('Book',BookSchema);
 

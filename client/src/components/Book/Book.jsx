@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import "./Book.css";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 
-let added=false;
 export default function Book({ Name, Price, Url,ServerUrl}) {
   const [addedtocart,setAddedtocart]=useState(false);
+  const navigate=useNavigate();
 
   const handleAddtoCart=async()=>{
       const data={
@@ -18,21 +19,21 @@ export default function Book({ Name, Price, Url,ServerUrl}) {
         username:localStorage.getItem('Username'),
         item:data
       }).then(response=>{
-        console.log('done');
-        setAddedtocart(true);
-        localStorage.setItem(Name,'added');
-        console.log(response.data);
+        setAddedtocart(true);        
       }).catch(err=>{
         console.log('Error!');
       });
-      
-      
-      // added=true;
+
+  }
+
+  const handleBook=()=>{
+    navigate(`/book/${Name}/${addedtocart}`)
   }
 
   useEffect(()=>{
     axios.get(`${ServerUrl}/findinCart`,{
       params:{
+        Username:localStorage.getItem("Username"),
         Name:Name
       }
     }).then(res=>{
@@ -46,8 +47,13 @@ export default function Book({ Name, Price, Url,ServerUrl}) {
 
   return (
     <div className="BookContainer">
+    <span id="BookClick" onClick={handleBook}>
+
       <img src={Url} alt="book preview"/>
+      
       <p id="BookName">{Name}</p>
+    </span>
+      
         <b style={{textAlign:"center"}}>{Price}/-</b>
       <button id="add-to-cart" onClick={handleAddtoCart} className={addedtocart?'disabled':''} >
       {

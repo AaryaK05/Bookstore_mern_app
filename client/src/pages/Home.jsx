@@ -84,16 +84,16 @@ export default function Home() {
                 <hr/>
                 <div className="sort">
                 <input type="radio" id="sort_by_name" name="sort" value="sort_by_name" onChange={(e)=>setSortName(true)}/>
-                <label for="sort_by_name">sort by name</label>
+                <label htmlFor="sort_by_name">sort by name</label>
                 </div>
                 <hr/>
                 <div className="sort">
                 <input type="radio" id="sort_by_price_a" name="sort" value="sortpriceascending" onChange={handleSortPrice}/>
-                <label for="sort_by_price_a">sort price asc</label>
+                <label htmlFor="sort_by_price_a">sort price asc</label>
                 </div>
                 <div className="sort">
                 <input type="radio" id="sort_by_price_d" name="sort" value="sortpricedescending" onChange={handleSortPrice}/>
-                <label for="sort_by_price_d">sort price des</label>
+                <label htmlFor="sort_by_price_d">sort price des</label>
                 </div>
                 <div className="applybtn">
                 <input type="submit" value="Clear" id="apply" />

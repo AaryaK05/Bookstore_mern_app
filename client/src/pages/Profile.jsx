@@ -59,8 +59,7 @@ export default function Profile() {
       axios
         .get(`${Url}/getOrders`, {
           params: {
-            id: 124,
-            // username:localStorage.getItem('Username')
+            username:localStorage.getItem('Username')
           },
         })
         .then((response) => {
@@ -107,8 +106,8 @@ export default function Profile() {
               orders.map((ord) => {
                 let date=new Date(ord.Time);
                 return (
-                  <>
-                    <tr>
+                  
+                    <tr key={ord._id}>
                       <td style={{width: "100px"}}>
                         Order Id: {ord._id}
                         <br></br>
@@ -119,7 +118,7 @@ export default function Profile() {
                       <td style={{width: "400px"}}>
                         {ord.Items.map((item) => {
                           return (
-                            <div>
+                            <div key={item._id}>
                               <span>{item.amount}</span>x
                               <span>{item.Name}</span>=<span>{item.Price}</span>
                             </div>
@@ -127,7 +126,7 @@ export default function Profile() {
                         })}
                       </td>
                     </tr>
-                  </>
+                  
                 );
               })
             ) : (

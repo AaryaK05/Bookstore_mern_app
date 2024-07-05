@@ -1,4 +1,4 @@
-import express, { response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
@@ -7,9 +7,21 @@ import {Book, Cart} from './model.js';
 import passwordHash from 'password-hash';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import natural from "natural";
 
 
+const Analyzer=natural.SentimentAnalyzer;
+const stemmer=natural.PorterStemmer;
+const analyzer=new Analyzer("English",stemmer,"afinn")
 
+
+function interpretSentiment(score) {
+    if (score > 0.5) return "Strongly Positive";
+    if (score > 0) return "Positive";
+    if (score === 0) return "Neutral";
+    if (score > -0.5) return "Negative";
+    return "Strongly Negative";
+  }
 
 const url=`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.25ehbzy.mongodb.net/${process.env.MONGODB_DATABASE}?retryWrites=true&w=majority&appName=${process.env.MONGODB_CLUSTER}`;
 const app=express();
@@ -20,7 +32,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); 
 app.use(express.static(__dirname+'/public'));
 const port=process.env.PORT;
-let _Username;
+
 
 /*Mongoose Connection */
 mongoose.connect(url).then(() => {
@@ -45,7 +57,7 @@ app.get('/', (req, res) => {
     // }).catch((err)=>{
     //     res.send(`Error:${err}`);
     // });
-    // res.send({ "msg": "This has CORS enabled 🎈" })
+    res.send({ "msg": "This has CORS enabled 🎈" })
 });
 
 app.get("/user_info",async(req,res)=>{
@@ -65,7 +77,6 @@ app.post('/find_user',async(req,res)=>{
     await User.findOne({username:user}).then(data=>{
         if(data){
             if(passwordHash.verify(pass,data.password)){
-                _Username=user;
                 res.send('User Found');
             }
             else{
@@ -101,18 +112,22 @@ app.get("/getBooks", async(req,res)=>{
     res.json(books);
 });
 
-app.get("/findinCart",(req,res)=>{
-    const name=req.query.Name;
-    Cart.find({Username:_Username}).where('Cart').elemMatch({Name:name}).then(response=>{
-        if(response.length!=0){
-            res.send("Found");
-        }else{
-            res.send("Not Found");
-        }
-    }).catch(err=>{
-        console.log(err);
-    });
-    // res.send("Success").status(200);
+app.get("/findBook",async(req,res)=>{
+    const Bookname=req.query.Name;
+    var book=await Book.find({Name:Bookname});
+    var result;
+    var sum=0;
+    book[0].Reviews.forEach((r,index)=>{
+        var result=analyzer.getSentiment(r.Review.split(" "));
+        const humanReadable =interpretSentiment(result);
+        sum+=result;
+    })
+    const totalReviews=book[0].Reviews.length;
+    const avgScore=sum/totalReviews;
+    const finalScore=interpretSentiment(avgScore);
+    console.log("Returned value would be"+finalScore);
+    
+    res.json({book,finalScore,totalReviews});
 })
 
 app.post("/applyFilter",async(req,res)=>{
@@ -183,13 +198,28 @@ app.post("/applyFilter",async(req,res)=>{
 })
 
 app.get("/getOrders",async(req,res)=>{
-    const uname=_Username;
+    const uname=req.query.username;
     var orders=await Order.find({Username:uname},{Orders:1});
     res.json(orders);
 })
 
+app.get("/findinCart",(req,res)=>{
+    const name=req.query.Name;
+    const username=req.query.Username;
+    Cart.find({Username:username}).where('Cart').elemMatch({Name:name}).then(response=>{
+        if(response.length!=0){
+            res.send("Found");
+        }else{
+            res.send("Not Found");
+        }
+    }).catch(err=>{
+        console.log(err);
+    });
+    // res.send("Success").status(200);
+})
+
 app.get("/getCart",async(req,res)=>{
-    const uname={Username:_Username}
+    const uname=req.params.username;
     Cart.findOne(uname).then(response=>{
         res.json(response);
     }).catch(err=>{
@@ -212,31 +242,85 @@ app.post("/addtocart",async(req,res)=>{
     });
 })
 
+app.post("/removeCartItem",(req,res)=>{
+    const uname=req.body.Username;
+    const item=req.body.item;
+    Cart.findOneAndUpdate({Username:uname},{"$pull":{
+        'Cart':item
+    }
+    }).then((r)=>{
+        
+        if(r.Cart.length==1){
+            Cart.deleteOne({Username:uname}).then(()=>{
+                return res.send("Updated").status(200);
+            }).catch(err=>{
+                console.log("Coudn't Delete!"+err);
+            })
+        }else{
+            res.send("Updated").status(200);
+        }
+    }).catch(err=>{
+        console.log(err);
+    });
+})
+
 app.post('/addOrder',async(req,res)=>{
     const username=req.body.username;
     const cart=req.body.cart;
-    // const filter={Username:username}
     Order.findOneAndUpdate({Username:username},{"$push":{
         'Orders':[{
             Items:cart,
         }
         ]
-    }}).then(()=>{
-        Cart.deleteOne({Username:username}).then(()=>{
-            res.send("Created").status(200);
-        }).catch(err=>{
-            console.log("Coudn't Delete!"+err);
-        })
+    }}).then((response)=>{
+        if(response==null){
+            Order.create({
+                Username:username,
+                Orders:[{
+                    Items:cart
+                }]
+            }).then(()=>{
+                Cart.deleteOne({Username:username}).then(()=>{
+                    return res.send("Created").status(200);
+                }).catch(err=>{
+                    console.log("Coudn't Delete!"+err);
+                })
+            }).catch(err=>{
+                console.log(err);
+            })
+        }else{
+            Cart.deleteOne({Username:username}).then(()=>{
+                res.send("Updated").status(200);
+            }).catch(err=>{
+                console.log("Coudn't Delete!"+err);
+            })
+        }
     }).catch((err)=>{
         console.log(err);
-        console.log("Not created");
+        res.status(404);
     })
 });
+
+app.post("/addReview",(req,res)=>{
+    const bname=req.body.BookName;
+    const rev={
+        Username:req.body.Username,
+        Review:req.body.Review
+    }
+
+    Book.findOneAndUpdate({Name:bname},{$push:{
+        Reviews:rev
+    }},{upsert:true}).then(r=>{
+        res.send("Success").status(200);
+    }).catch(err=>{
+        console.log(err);
+        res.status(400);
+    })
+})
 
 app.post("/removeUser",(req,res)=>{
     const username={username:req.body.username};
     User.deleteOne(username).then(()=>{
-        console.log("Deleted uSER");
         res.send("Deleted").status(200);
     }
     ).catch(err=>{

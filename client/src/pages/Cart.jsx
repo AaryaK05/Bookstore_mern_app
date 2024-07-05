@@ -27,11 +27,12 @@ export default function Cart(){
             username:localStorage.getItem("Username"),
             cart:cart
         });
-        if(response.status===200){
+        if(response.data=="Created"){
+            alert("1st Order Placed!");
+            window.location.href = "/";
+        }else if(response.data=="Updated"){
             alert("Order Placed!");
-            cart.map(c=>{
-                localStorage.removeItem(c.Name);
-            })
+            window.location.href = "/";
         }
         else{
             alert("Couldn't Place Order!");
@@ -40,7 +41,9 @@ export default function Cart(){
 
     useEffect(()=>{
         axios.get(`${Url}/getCart`,{
-            username:localStorage.getItem('Username')
+            params:{
+                username:localStorage.getItem('Username')
+            }
         }).then(response=>{
             setCart(response.data.Cart);
             setCartExist(true);
@@ -56,11 +59,9 @@ export default function Cart(){
                 {cartExist ? 
                 cart.map((c)=>{
                     totalAmount+=c.Price;
-                    return <>
-                    <CartItem Url={c.Url} Name={c.Name} Price={c.Price} amount={c.amount} handleAdd={handleAdd} handleSubstract={handleSubstract}/>                   
-                    <div style={{textAlign:'center',margin:'50px 0px'}}>
-                    </div>
-                        </>
+                    return (
+                    <CartItem key={Math.random()} Url={c.Url} Name={c.Name} Price={c.Price} amount={c.amount} handleAdd={handleAdd} handleSubstract={handleSubstract} ServerUrl={Url}/>                   
+                    )                       
                 })
                 :  <p style={{textAlign:"center",marginTop:'100px',marginBottom:'300px'}}>No Items in Cart!</p>}
                 {cartExist?

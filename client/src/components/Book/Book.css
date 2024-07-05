@@ -16,6 +16,15 @@
     font-size: 1.2rem;
     font-family:'Times New Roman', Times, serif;
     text-align: center;
+    color: black;
+}
+
+#BookName:hover{
+    color: blue;    
+}
+
+#BookClick{
+    cursor:pointer;
 }
 
 #add-to-cart{

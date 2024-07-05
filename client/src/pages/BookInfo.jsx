@@ -120,7 +120,7 @@ export default function BookInfo({ ServerUrl }) {
 
           <div>
           <p>Average Score:</p>
-            {avgReviewScore} ({totalReviews})
+            Mostly {avgReviewScore} ({totalReviews})
           </div>
 
           <div className="ReviewBlock">

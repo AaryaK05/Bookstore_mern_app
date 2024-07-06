@@ -11,21 +11,22 @@ export default function Cart(){
     let totalAmount=0;
     const [cart,setCart]=useState([]);
     const [cartExist,setCartExist]=useState(false);
-    const [amount, setAmount] = useState(0);
+    // const [quantity, setQuantity] = useState(0);
 
-    const handleAdd = () => {
-        setAmount((amount) => amount + 1);
-      };
-      const handleSubstract = () => {
-        if (amount != 0) {
-          setAmount((amount) => amount - 1);
-        }
-      };
+    // const handleAdd = () => {
+    //     setAmount((amount) => amount + 1);
+    //   };
+    //   const handleSubstract = () => {
+    //     if (amount != 0) {
+    //       setAmount((amount) => amount - 1);
+    //     }
+    //   };
 
     const handleBuy=async()=>{
         const response=await axios.post(`${Url}/addOrder`,{
             username:localStorage.getItem("Username"),
-            cart:cart
+            cart:cart,
+            total:totalAmount
         });
         if(response.data=="Created"){
             alert("1st Order Placed!");
@@ -59,8 +60,24 @@ export default function Cart(){
                 {cartExist ? 
                 cart.map((c)=>{
                     totalAmount+=c.Price;
+                    {/* let quantity=c.amount; */}
+                    {/* const handleAdd = () => {
+                        console.log(quantity);
+                      if (quantity == 5) {
+                        return;
+                      }
+                      quantity+=1;
+                    };
+                    const handleSubstract = () => {
+                      if (quantity == 1) {
+                        return;
+                      }
+                      quantity-=1;
+                    }; */}
                     return (
-                    <CartItem key={Math.random()} Url={c.Url} Name={c.Name} Price={c.Price} amount={c.amount} handleAdd={handleAdd} handleSubstract={handleSubstract} ServerUrl={Url}/>                   
+                    <CartItem key={Math.random()} Url={c.Url} Name={c.Name} Price={c.Price} amount={c.amount} 
+                    // handleAdd={handleAdd} handleSubstract={handleSubstract} quantity={quantity}
+                     ServerUrl={Url}/>                   
                     )                       
                 })
                 :  <p style={{textAlign:"center",marginTop:'100px',marginBottom:'300px'}}>No Items in Cart!</p>}

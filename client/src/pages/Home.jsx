@@ -30,6 +30,18 @@ export default function Home() {
     })
   }
 
+  const handleClear=()=>{
+    const name=document.getElementById("sort_by_name");
+    const asc=document.getElementById("sort_by_price_a");
+    const desc=document.getElementById("sort_by_price_d");
+    name.checked=false;
+    asc.checked=false;
+    desc.checked=false;
+    setSortName(false);
+    setSortPriceAscending(false);
+    setSortPriceDescending(false);
+  }
+
   const handleSortPrice=(e)=>{
     // console.log(e.target.value);
     const sort=e.target.value;
@@ -96,7 +108,7 @@ export default function Home() {
                 <label htmlFor="sort_by_price_d">sort price des</label>
                 </div>
                 <div className="applybtn">
-                <input type="submit" value="Clear" id="apply" />
+                <input type="submit" value="Clear" id="apply" onClick={handleClear}/>
                 <input type="submit" value="Apply" id="apply" onClick={handleFilter}/>
                 </div>
               </div>

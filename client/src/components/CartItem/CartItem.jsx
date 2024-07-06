@@ -4,7 +4,9 @@ import trashIcon from '../../assets/trash.jpg';
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 
-export default function CartItem({ Url, Name, Price,amount,handleAdd,handleSubstract,ServerUrl }) {
+export default function CartItem({ Url, Name, Price,handleAdd,handleSubstract,quantity,amount,ServerUrl }) {
+  // const [quantity, setQuantity] = useState(amount);
+  
   const handleCartItemRemove=()=>{
     const data={
       Name:Name,
@@ -23,7 +25,19 @@ export default function CartItem({ Url, Name, Price,amount,handleAdd,handleSubst
       console.log(err);
     })
   }
- 
+
+  // const handleAdd=()=>{
+  //   if(quantity==5){
+  //     return;
+  //   }
+  //   setQuantity(quantity+1);
+  // }
+  // const handleSubstract=()=>{
+  //   if(quantity==1){
+  //     return;
+  //   }
+  //   setQuantity(quantity-1);
+  // }
 
   return (
     <div className="CartContainer">
@@ -33,9 +47,9 @@ export default function CartItem({ Url, Name, Price,amount,handleAdd,handleSubst
         <div className="BookAmount">
           <b>{Price}/-</b>
           <div>
-          <button onClick={handleSubstract}>-</button>
+          {/* <button onClick={handleSubstract}>-</button>
           {amount}
-          <button onClick={(e)=>handleAdd}>+</button>
+          <button onClick={handleAdd}>+</button> */}
         </div>
         </div>
         <div>

@@ -38,47 +38,51 @@ const BookSchema=new Schema({
 })
 export const Book=model('Book',BookSchema);
 
-const OrderSchema=new Schema({
-    id:Number,
-    Username:{
-        type:String,
-        require:true
+const OrderSchema = new Schema({
+  id: Number,
+  Username: {
+    type: String,
+    require: true,
+  },
+  Orders: [
+    {
+      id: Number,
+      Items: [
+        {
+          Name: {
+            type: String,
+            require: true,
+          },
+          Price: {
+            type: Number,
+            require: true,
+          },
+          amount: {
+            type: Number,
+            require: true,
+          },
+          Url: String,
+        },
+      ],
+      Total: {
+        type: Number,
+        require: true,
+      },
+      Time: {
+        type: Date,
+        default: Date.now(),
+      },
+      Payment: {
+        type: Boolean,
+        default: false,
+      },
+      OrderProcessed: {
+        type: String,
+        default: "Not Completed",
+      },
     },
-    Orders:[
-            {
-                id:Number,
-                Items:[
-                    {
-                        Name:{
-                            type:String,
-                            require:true
-                        },
-                        Price:{
-                            type:Number,
-                            require:true
-                        },
-                        amount:{
-                            type:Number,
-                            require:true
-                        },
-                        Url:String
-                    }
-                ],
-                Time:{
-                    type:Date,
-                    default:Date.now()
-                },
-                Payment:{
-                    type:Boolean,
-                    default:false
-                },
-                OrderProcessed:{
-                    type:String,
-                    default:'Not Completed'
-                }
-            }
-    ],
-})
+  ],
+});
 
 export const Order=model('Order',OrderSchema);
 

@@ -98,6 +98,7 @@ export default function Profile() {
             <tr>
               <th className="rb">Order Id</th>
               <th>Items</th>
+              <th>Total</th>
             </tr>
           </thead>
           <tbody>
@@ -105,6 +106,7 @@ export default function Profile() {
             
               orders.map((ord) => {
                 let date=new Date(ord.Time);
+                let Total=ord.Total;
                 return (
                   
                     <tr key={ord._id}>
@@ -125,6 +127,7 @@ export default function Profile() {
                           );
                         })}
                       </td>
+                        <td style={{textAlign:'center'}}><b>{Total}</b></td>
                     </tr>
                   
                 );

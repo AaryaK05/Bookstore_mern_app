@@ -267,9 +267,11 @@ app.post("/removeCartItem",(req,res)=>{
 app.post('/addOrder',async(req,res)=>{
     const username=req.body.username;
     const cart=req.body.cart;
+    const total=req.body.total;
     Order.findOneAndUpdate({Username:username},{"$push":{
         'Orders':[{
             Items:cart,
+            Total:total
         }
         ]
     }}).then((response)=>{
@@ -278,7 +280,8 @@ app.post('/addOrder',async(req,res)=>{
                 Username:username,
                 Orders:[{
                     Items:cart
-                }]
+                }],
+                Total:total
             }).then(()=>{
                 Cart.deleteOne({Username:username}).then(()=>{
                     return res.send("Created").status(200);

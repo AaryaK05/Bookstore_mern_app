@@ -219,8 +219,8 @@ app.get("/findinCart",(req,res)=>{
 })
 
 app.get("/getCart",async(req,res)=>{
-    const uname=req.params.username;
-    Cart.findOne(uname).then(response=>{
+    const uname=req.query.username;
+    Cart.findOne({Username:uname}).then(response=>{
         res.json(response);
     }).catch(err=>{
         console.log(err);

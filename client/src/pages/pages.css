@@ -3,6 +3,7 @@
     margin: 0;
 }
 
+
 /* Forms */
 .auth-page{
     background-color: rgb(0, 119, 255);
@@ -29,6 +30,7 @@
     font-size: 8rem;
     color: white;
 }
+
 /* Forms */
 
 /* Profile*/
@@ -61,7 +63,7 @@
     margin: 5px;
 }
 .profile-buttons{
-
+    
 }
 
 .orders{
@@ -83,13 +85,13 @@ tr{
 
 /* totalAmount{
     border-top: 1px solid black;
-} */
-/* Profile*/
+    } */
+    /* Profile*/
+    
 
-
-/* home body */
-.home{
-
+    /* home body */
+    .home{
+        
 }
 
 .home-body{
@@ -241,3 +243,32 @@ tr{
 
 /* Book info */
 
+@media only screen and (max-width:768px) {
+    .auth-page{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .auth-form{
+        width: 350px;
+    }
+
+    #bookez{
+        font-size: 3rem;
+    }
+    #landing-text{
+        font-size: 1rem;
+    }
+
+    .home-container{
+        flex-direction: column;
+    }
+
+    .profile-page{
+        margin-left: 60px;
+    }
+    .orders{
+        margin-left: 60px;
+    }
+}

@@ -42,7 +42,7 @@ export default function CartItem({ Url, Name, Price,handleAdd,handleSubstract,qu
   return (
     <div className="CartContainer">
       <img src={Url} />
-        <p id="BookName">{Name}</p>
+        <p id="BookName2">{Name}</p>
       <div>
         <div className="BookAmount">
           <b>{Price}/-</b>

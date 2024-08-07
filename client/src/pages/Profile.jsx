@@ -34,6 +34,7 @@ export default function Profile() {
         .then((response) => {
           localStorage.removeItem("isLoggedIn");
           localStorage.removeItem("Username");
+          localStorage.removeItem("Details");
           window.location.href = "/login";
         })
         .catch((err) => {

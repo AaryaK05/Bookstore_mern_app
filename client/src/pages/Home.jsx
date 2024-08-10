@@ -75,10 +75,13 @@ export default function Home() {
 
         <div className="home-container">
           <div className="filters">
-            <h4>Filters</h4>
+          <details>
+            <summary><b>Filters</b></summary>
               <div className="filter-content">
-                <div>
-                Genre:<br/>
+                <div className="filter-genre">
+                  <p>
+                  Genre:
+                  </p>
                   <select id="selectGenre">
                     <option>all</option>
                     <option>coming of age</option>
@@ -93,7 +96,7 @@ export default function Home() {
                     <option>suspense</option>
                   </select>
                 </div>
-                <hr/>
+               
                 <div className="sort">
                 <input type="radio" id="sort_by_name" name="sort" value="sort_by_name" onChange={(e)=>setSortName(true)}/>
                 <label htmlFor="sort_by_name">sort by name</label>
@@ -108,11 +111,18 @@ export default function Home() {
                 <label htmlFor="sort_by_price_d">sort price des</label>
                 </div>
                 <div className="applybtn">
-                <input type="submit" value="Clear" id="apply" onClick={handleClear}/>
-                <input type="submit" value="Apply" id="apply" onClick={handleFilter}/>
+                <button value="Clear" id="apply" onClick={handleClear}>
+                  Clear
+                </button>
+                <button value="Apply" id="apply" onClick={handleFilter}>
+                  Apply
+                </button>
+                
                 </div>
               </div>
+              </details>
           </div>
+
 
           <div className="home-items">
             {books.map((b) => {

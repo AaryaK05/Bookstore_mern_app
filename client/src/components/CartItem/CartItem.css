@@ -40,3 +40,15 @@
 .deleteIcon:hover{
     cursor: pointer;
 }
+
+@media only screen and (max-width:768px) {
+    .CartContainer img{
+        width: 50px;
+    }
+    #BookName2{
+        font-size: .6rem;
+    }
+    .BookAmount{
+        font-size: .6rem;
+    }
+}

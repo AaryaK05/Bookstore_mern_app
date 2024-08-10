@@ -91,9 +91,9 @@ export default function BookInfo({ ServerUrl }) {
                   {/* <p id="BookPrice">{b.Price}/-</p> */}
                   Genres:<p>[{b.Genre}]</p>
                 </div>
-                <img src={b.Url} style={{ height: "300px" }} />
+                <img src={b.Url}/>
               </div>
-              <div>
+              <div className="BookDescription">
                 <p>{b.Description}</p>
               </div>
               <div className="BookBottom">

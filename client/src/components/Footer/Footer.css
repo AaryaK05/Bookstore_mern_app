@@ -7,3 +7,9 @@
     padding: 20px 0px;
     border-top: 0.3px solid rgba(128, 128, 128, 0.5);
 }
+
+    @media only screen and (max-width:768px) {
+        .footer{
+            font-size: .7rem;
+        }
+    }

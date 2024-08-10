@@ -125,7 +125,7 @@ app.get("/findBook",async(req,res)=>{
     const totalReviews=book[0].Reviews.length;
     const avgScore=sum/totalReviews;
     const finalScore=interpretSentiment(avgScore);
-    console.log("Returned value would be"+finalScore);
+    //console.log("Returned value would be"+finalScore);
     
     res.json({book,finalScore,totalReviews});
 })

@@ -29,6 +29,10 @@
     cursor:pointer;
 }
 
+.book-p{
+    text-align: center;
+}
+
 #add-to-cart{
     background-color: red;
     border-color: red;
@@ -49,17 +53,27 @@
 }
 
 @media only screen and (max-width:768px){
+    .BookContainer{
+        height: 68px;
+        width: 200px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
     .BookContainer img{
-        height: 60px;
+        height: 80px;
+        width: 60px;
+    }
+    #BookClick{
+        display: flex;
+        align-items: center;
+        gap: 25px;
     }
     #BookName{
         font-size: .6rem;
-    }
-    .BookContainer{
-        height: 130px;
-        width: 50px;
-        align-items: center;
-        justify-content: space-evenly;
+        margin-top: 0px;
     }
     .BookContainer b{
         font-size: .6rem;

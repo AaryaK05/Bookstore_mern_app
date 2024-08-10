@@ -37,6 +37,8 @@
 .UserProfile{
     border-radius: 100px;
     border: 2px solid rgb(0, 0, 0);
+    width: 80px;
+    height: 80px;
 }
 
 .profile-page{
@@ -70,10 +72,13 @@
     display: flex;
     flex-direction: column;
     margin-left: 280px;
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 table{
     border-collapse: collapse;
+    width: 80%;
 }
 th,td{
     border-right: 1px solid black;
@@ -138,12 +143,8 @@ tr{
 }
 
 #sort_by_price_a,
+#sort_by_price_d,
 #sort_by_name
-{
-    width: 20px;
-    margin-top: 2px;
-}
-#sort_by_price_d
 {
     width: 20px;
     margin-top: 2px;
@@ -173,6 +174,9 @@ tr{
     display: flex;
     justify-content: space-evenly;
     margin-bottom: 20px;
+}
+.BookInfoHead img{
+    height: 300px;
 }
 
 .BookInfoLeft{
@@ -255,10 +259,11 @@ tr{
     }
 
     #bookez{
-        font-size: 3rem;
+        font-size: 5rem;
     }
     #landing-text{
         font-size: 1rem;
+        margin: 50px 0px;
     }
 
     .home-container{
@@ -270,5 +275,97 @@ tr{
     }
     .orders{
         margin-left: 60px;
+    }
+    .filters{
+        font-size: .8rem;
+        margin-bottom: 20px;
+    }
+    .filter-content{
+        margin-top: 5px;
+    }
+    
+    .filter-genre{
+        display: flex;
+        
+    }
+    #sort_by_price_a,
+    #sort_by_price_d,
+    #sort_by_name {
+        width: 10px;
+        margin-top: 2px;
+    }
+    .sort{
+        height: 30px;
+    }
+    .applybtn{
+        display: flex;
+        align-self: flex-end;
+        gap: 5px;
+    }
+    #apply{
+        width: 35px; 
+        font-size: .6rem;
+        gap: 5px;
+    }
+    .home-items{
+        display: flex;
+        flex-direction: column;
+    }
+    .buy-field{
+        font-size: .8rem;
+    }
+    .profile-page{
+        margin-left: 20px;
+        font-size: .9rem;
+    }
+    .profile-page img{
+        height: 50px;
+        width:  50px;
+    }
+    .profile-buttons button{
+        width: fit-content;
+        font-size: .7rem;
+    }
+    .orders{
+        margin-left: 20px;
+        font-size: .7rem;
+    }
+
+    .orders table{
+    }
+
+    .BookInfoContainer{
+        margin: 0px 0px;
+        padding: 0px 0px;
+    }
+    .BookInfo{
+        padding: 10px 0px;
+    }
+    .BookInfoLeft{
+        font-size: .8rem;
+    }
+    .BookInfoHead img{
+        height: 100px;
+    }
+    #BookTitle{
+        font-size: .8rem;
+    }
+    .BookDescription{
+        font-size: .8rem;
+        padding: 0px 5px;
+    }
+    .BookBottom{
+        padding-right: 2    0px;
+    }
+    #BookPrice{
+        font-size: .8rem;
+        margin-top: 10px;
+    }
+    #add-to-cart{
+        padding-bottom: 10px;
+    }
+    .Reviews{
+        padding: 0px 10px;
+        font-size: .8rem;
     }
 }

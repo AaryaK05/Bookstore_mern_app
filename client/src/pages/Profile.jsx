@@ -60,7 +60,7 @@ export default function Profile() {
       axios
         .get(`${Url}/getOrders`, {
           params: {
-            username:localStorage.getItem('Username')
+            username: localStorage.getItem("Username"),
           },
         })
         .then((response) => {
@@ -82,7 +82,7 @@ export default function Profile() {
         <img
           src={User}
           className="UserProfile"
-          style={{ width: 80, height: 80 }}
+         
         />
         <div>Username:{username}</div>
         <div>Email:{email}</div>
@@ -91,10 +91,11 @@ export default function Profile() {
           <button onClick={handleRemove}>Remove account</button>
         </div>
       </div>
+      
       <div className="orders">
         <h3 style={{ marginBottom: "20px" }}>Orders</h3>
 
-        <table style={{ border: "1px solid black", width: "80%" }}>
+        <table style={{ border: "1px solid black"}}>
           <thead>
             <tr>
               <th className="rb">Order Id</th>
@@ -104,33 +105,34 @@ export default function Profile() {
           </thead>
           <tbody>
             {orderexist ? (
-            
               orders.map((ord) => {
-                let date=new Date(ord.Time);
-                let Total=ord.Total;
+                let date = new Date(ord.Time);
+                let Total = ord.Total;
                 return (
-                  
-                    <tr key={ord._id}>
-                      <td style={{width: "100px"}}>
-                        Order Id: {ord._id}
-                        <br></br>
-                        Date:{date.getDate()}/{date.getMonth()+1}/{date.getFullYear()}
-                        <br></br>
-                        Time:{date.getHours()}:{date.getMinutes()}:{date.getSeconds()}
-                      </td>
-                      <td style={{width: "400px"}}>
-                        {ord.Items.map((item) => {
-                          return (
-                            <div key={item._id}>
-                              <span>{item.amount}</span>x
-                              <span>{item.Name}</span>=<span>{item.Price}</span>
-                            </div>
-                          );
-                        })}
-                      </td>
-                        <td style={{textAlign:'center'}}><b>{Total}</b></td>
-                    </tr>
-                  
+                  <tr key={ord._id}>
+                    <td style={{ width: "100px" }}>
+                      Order Id: {ord._id}
+                      <br></br>
+                      Date:{date.getDate()}/{date.getMonth() + 1}/
+                      {date.getFullYear()}
+                      <br></br>
+                      Time:{date.getHours()}:{date.getMinutes()}:
+                      {date.getSeconds()}
+                    </td>
+                    <td style={{ width: "400px" }}>
+                      {ord.Items.map((item) => {
+                        return (
+                          <div key={item._id}>
+                            <span>{item.amount}</span>x<span>{item.Name}</span>=
+                            <span>{item.Price}</span>
+                          </div>
+                        );
+                      })}
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <b>{Total}</b>
+                    </td>
+                  </tr>
                 );
               })
             ) : (
@@ -140,7 +142,6 @@ export default function Profile() {
             )}
           </tbody>
         </table>
-        
       </div>
       <Footer />
     </>

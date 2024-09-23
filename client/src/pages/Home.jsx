@@ -71,7 +71,7 @@ export default function Home() {
       <Header />
       <p id="landing-text">Browse the best books to offer!</p>
       <div className="home-body">
-        <input placeholder="Search for..." />
+{/*         <input placeholder="Search for..." /> */}
 
         <div className="home-container">
           <div className="filters">

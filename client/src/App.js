@@ -5,12 +5,42 @@ import Profile from './pages/Profile';
 import Cart from './pages/Cart';
 import Signin from './pages/Signin';
 import Login from './pages/Login';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import BookInfo from './pages/BookInfo';
 import Url from './utils/ServerUrl';
+import Loader from "../src/components/Loader/Loader";
 
 
 function App() {
+  const [isServerReady,setIsServerReady]=useState(false);
+  const [isCheckingServer,setIsCheckingServer]=useState(true);
+  
+  function checkServerStatus(){
+    // Show loader
+    fetch(Url).then((response)=>{
+      if(response.ok){
+        setIsServerReady(true);
+      }
+      else{
+        console.log("Error",response.status);
+        alert(response.status);
+      }
+    }).catch((error)=>{
+      console.log("Server not ready!");
+      alert(error);
+    }).finally(()=>{
+      setIsCheckingServer(false);
+    })
+  }
+
+  useEffect(()=>{
+    checkServerStatus();
+  },[20])
+
+  if(isCheckingServer || !isServerReady){
+    return <Loader/>
+  }
+  
   
   return (
     <BrowserRouter>

@@ -8,6 +8,8 @@ import passwordHash from 'password-hash';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import natural from "natural";
+import compression from 'compression';
+
 
 
 const Analyzer=natural.SentimentAnalyzer;
@@ -28,6 +30,7 @@ const app=express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(compression());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); 
 app.use(express.static(__dirname+'/public'));
